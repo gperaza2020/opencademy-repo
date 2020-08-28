@@ -1,5 +1,5 @@
 <odoo>
-  <!-- Vista formulario Gilper 25/08/2020 -->
+   <!-- Vista formulario Gilper 25/08/2020 -->
   <record model="ir.ui.view" id="course_form_view">
     <field name="name">course.form</field>
     <field name="model">openacademy.course</field>
@@ -7,7 +7,8 @@
      <form string="Course Form">
        <sheet>
          <group>
-           <field name="name"/>           
+           <field name="name"/>  
+           <field name="responsible_id"/>                        
          </group>  
        </sheet>
        <notebook>
@@ -17,10 +18,19 @@
           <page string="About">
              this us a example of notebooks
           </page>
+          <page string="Course">
+             <field name="session_ids">
+                <tree string = "Registered sessions">
+                   <field name="name"/>
+                    <field name="instructor_id"/>
+                </tree>   
+             </field>   
+          </page>
        </notebook>
      </form>
     </field>
   </record>    
+  
   <!-- Vista Lista Gilper 25/08/2020 -->
   <record model="ir.ui.view" id="course_list_view">
     <field name="name">course.list</field>
@@ -29,6 +39,7 @@
      <tree string="Course Tree">
         <field name="name" string="Name Tree"/>
         <field name="description"/>
+        <field name="responsible_id"/>
      </tree>
     </field>
   </record>   
@@ -71,4 +82,52 @@
     <menuitem name="Server to list" id="openacademy" parent="openacademy.menu_2"
               action="openacademy.action_server"/>
 -->
+
+ <record model="ir.ui.view" id="session_form_view">
+            <field name="name">session.form</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <form string="Session Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="start_date"/>
+                            <field name="duration"/>
+                            <field name="seats"/>
+                            <field name="instructor_id"/>
+                            <field name="course_id"/>
+                            <label for="attendee_ids"/>
+                            <field name="attendee_ids"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+  </record>
+   
+   <record model="ir.ui.view" id="session_tree_view">
+            <field name="name">session.tree</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <tree string="Session Tree">
+                   <field name="name"/>
+                   <field name="start_date"/>
+                   <field name="duration"/>
+                   <field name="seats"/>
+                   <field name="instructor_id"/>
+                   <field name="course_id"/>
+                   <field name="attendee_ids"/>
+                </tree>
+            </field>
+        </record>
+        
+  <record model="ir.actions.act_window" id="session_list_action">
+            <field name="name">Sessions</field>
+            <field name="res_model">openacademy.session</field>
+            <field name="view_mode">tree,form</field>
+  </record>
+
+        <menuitem id="session_menu" name="Sessions"
+                  parent="openacademy_menu"
+                  action="session_list_action"/>
+ 
 </odoo>
